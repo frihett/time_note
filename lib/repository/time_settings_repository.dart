@@ -8,4 +8,5 @@ abstract interface class TimeSettingsRepository {
   Future<List<TimeSetting>> getAllTimeSettings();
   Future<int> updateMemo(int timeSettingId, String memo);
   Future<int> deleteTimeSetting(int id);
+  Future<int> updateToggleState(int id, bool isToggled);
 }

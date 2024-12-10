@@ -20,8 +20,10 @@ class TimeSettingsDatabaseService {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+
     );
   }
 
@@ -34,9 +36,18 @@ class TimeSettingsDatabaseService {
         hour INTEGER NOT NULL,         
         minute INTEGER NOT NULL,       
         date TEXT NOT NULL,            
-        memo TEXT           
+        memo TEXT,         
+        isToggled INTEGER DEFAULT 0
+
       )
     ''');
+  }
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < newVersion) {
+      await db.execute('''
+      ALTER TABLE time_settings ADD COLUMN isToggled INTEGER DEFAULT 0
+    ''');
+    }
   }
 
   Future<TimeSetting> insert(TimeSetting timeSetting) async {
@@ -87,4 +98,15 @@ class TimeSettingsDatabaseService {
       whereArgs: [id],
     );
   }
+
+  Future<int> updateToggleState(int id, bool isToggled) async {
+    final db = await database;
+    return await db.update(
+      'time_settings',
+      {'isToggled': isToggled ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
 }

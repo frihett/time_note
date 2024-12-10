@@ -31,4 +31,8 @@ class TimeSettingsRepositoryLocal implements TimeSettingsRepository {
   Future<int> deleteTimeSetting(int id) async {
     return await databaseService.deleteTimeSetting(id);
   }
+
+  Future<int> updateToggleState(int id, bool isToggled) async{
+    return await databaseService.updateToggleState(id, isToggled);
+  }
 }

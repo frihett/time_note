@@ -29,4 +29,13 @@ class HomePageViewModel extends ChangeNotifier {
     await _repository.deleteTimeSetting(id);
     loadTimeSettings();
   }
+
+  Future<void> updateToggleState(int id, bool isToggled) async {
+    await _repository.updateToggleState(id, isToggled);
+    final index = _timeSettings.indexWhere((setting) => setting.id == id);
+    if (index != -1) {
+      _timeSettings[index].isToggled = isToggled;
+      notifyListeners();
+    }
+  }
 }

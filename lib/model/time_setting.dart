@@ -1,18 +1,20 @@
 class TimeSetting {
-  final int id;
-  final String period;
-  final int hour;
-  final int minute;
-  final DateTime date;
-  final String? memo;
+  int? id;
+  String period;
+  int hour;
+  int minute;
+  DateTime date;
+  String? memo;
+  bool isToggled;
 
   TimeSetting({
-    required this.id,
+    this.id,
     required this.period,
     required this.hour,
     required this.minute,
     required this.date,
     this.memo,
+    this.isToggled = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class TimeSetting {
       'minute': minute,
       'date': date.toIso8601String(),
       'memo': memo,
+      'isToggled': isToggled ? 1 : 0,
     };
   }
 
@@ -32,8 +35,10 @@ class TimeSetting {
       period: map['period'],
       hour: map['hour'],
       minute: map['minute'],
-      date: DateTime.parse(map['date']), // 문자열을 DateTime으로 변환
+      date: DateTime.parse(map['date']),
+      // 문자열을 DateTime으로 변환
       memo: map['memo'],
+      isToggled: map['isToggled'] == 1,
     );
   }
 }
