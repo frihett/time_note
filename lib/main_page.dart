@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:time_note/home_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:time_note/presentation/home/home_page.dart';
 import 'package:time_note/memo_manage_page.dart';
 
 class MainPage extends StatefulWidget {
+  final Widget child;
+
+  const MainPage({Key? key, required this.child}) : super(key: key);
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -22,13 +27,19 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: Text('Time Note'),
       ),
-      body: _pages[_currentIndex], // 현재 선택된 페이지 표시
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
+
+          if (index == 0) {
+            context.go('/home'); // 홈으로 이동
+          } else if (index == 1) {
+            context.go('/memo'); // 메모 관리로 이동
+          }
         },
         items: const [
           BottomNavigationBarItem(
