@@ -1,30 +1,32 @@
 import 'package:flutter/foundation.dart';
-import 'package:time_note/data_source/sqlite_database.dart';
+import 'package:time_note/data_source/time_settings_database_service.dart';
 import 'package:time_note/model/time_setting.dart';
+import 'package:time_note/repository/time_settings_repository.dart';
 
 class HomePageViewModel extends ChangeNotifier {
-  final SqliteDatabase _dbHelper = SqliteDatabase.instance;
+  final TimeSettingsRepository _repository;
   List<TimeSetting> _timeSettings = [];
 
   List<TimeSetting> get timeSettings => _timeSettings;
 
-  HomePageViewModel() {
+  HomePageViewModel({required TimeSettingsRepository repository})
+      : _repository = repository {
     loadTimeSettings();
   }
 
   Future<void> loadTimeSettings() async {
-    final timeSettings = await _dbHelper.getAllTimeSettings();
+    final timeSettings = await _repository.getAllTimeSettings();
     _timeSettings = timeSettings;
     notifyListeners();
   }
 
   Future<void> addTimeSetting(TimeSetting newTimeSetting) async {
-    await _dbHelper.insert(newTimeSetting);
+    await _repository.insert(newTimeSetting);
     loadTimeSettings(); // 데이터 갱신
   }
 
   Future<void> deleteTimeSetting(int id) async {
-    await _dbHelper.deleteTimeSetting(id);
+    await _repository.deleteTimeSetting(id);
     loadTimeSettings();
   }
 }
