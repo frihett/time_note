@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class TimeSettingPage extends StatefulWidget {
   final String? initialPeriod;
@@ -134,7 +135,14 @@ class _TimeSettingPageState extends State<TimeSettingPage> {
           ),
           SizedBox(height: 20.h),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+
+              context.pop({
+                'period': _selectedPeriod,
+                'hour': _selectedHour,
+                'minute': _selectedMinute,
+              });
+            },
             child: Container(
                 alignment: Alignment.center,
                 width: 40.w,
