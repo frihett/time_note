@@ -15,13 +15,13 @@ class HomePageViewModel extends ChangeNotifier {
   }
 
   Future<void> loadTimeSettings() async {
-    final timeSettings = await _repository.getAllTimeSettings();
+    final timeSettings = await _repository.fetchAllTimeSettings();
     _timeSettings = timeSettings;
     notifyListeners();
   }
 
   Future<void> addTimeSetting(TimeSetting newTimeSetting) async {
-    await _repository.insert(newTimeSetting);
+    await _repository.createTimeSetting(newTimeSetting);
     loadTimeSettings(); // 데이터 갱신
   }
 

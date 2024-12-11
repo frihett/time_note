@@ -8,17 +8,17 @@ class TimeSettingsRepositoryLocal implements TimeSettingsRepository {
   TimeSettingsRepositoryLocal({required this.databaseService});
 
   @override
-  Future<TimeSetting> insert(TimeSetting timeSetting) async {
+  Future<TimeSetting> createTimeSetting(TimeSetting timeSetting) async {
     return await databaseService.insert(timeSetting);
   }
 
   @override
-  Future<TimeSetting?> getTimeSetting(int id) async {
+  Future<TimeSetting?> fetchTimeSetting(int id) async {
     return await databaseService.getTimeSetting(id);
   }
 
   @override
-  Future<List<TimeSetting>> getAllTimeSettings() async {
+  Future<List<TimeSetting>> fetchAllTimeSettings() async {
     return await databaseService.getAllTimeSettings();
   }
 
