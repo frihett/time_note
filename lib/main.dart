@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:time_note/config/ui_style/UiStyle.dart';
-import 'package:time_note/main_page.dart';
+import 'package:time_note/data_source/time_settings_database_service.dart';
 import 'package:time_note/router.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await TimeSettingsDatabaseService.instance.database;
+
   runApp(const MyApp());
 }
 
