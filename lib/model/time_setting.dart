@@ -4,7 +4,6 @@ class TimeSetting {
   int hour;
   int minute;
   DateTime date;
-  String? memo;
   bool isToggled;
 
   TimeSetting({
@@ -13,7 +12,6 @@ class TimeSetting {
     required this.hour,
     required this.minute,
     required this.date,
-    this.memo,
     this.isToggled = false,
   });
 
@@ -24,7 +22,6 @@ class TimeSetting {
       'hour': hour,
       'minute': minute,
       'date': date.toIso8601String(),
-      'memo': memo,
       'isToggled': isToggled ? 1 : 0,
     };
   }
@@ -37,7 +34,6 @@ class TimeSetting {
       minute: map['minute'],
       date: DateTime.parse(map['date']),
       // 문자열을 DateTime으로 변환
-      memo: map['memo'],
       isToggled: map['isToggled'] == 1,
     );
   }
