@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                           vertical: 28.h, horizontal: 20.w),
                       decoration: BoxDecoration(
                           color: UiStyle.secondaryColorSurface,
-                          borderRadius: BorderRadius.circular(12.r)),
+                          borderRadius: BorderRadius.circular(20.r)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -89,7 +89,6 @@ class _HomePageState extends State<HomePage> {
               hour: result['hour'],
               minute: result['minute'],
               date: DateTime.now(),
-              memo: result['memo'] ?? '',
             );
             Provider.of<HomePageViewModel>(context, listen: false)
                 .addTimeSetting(newTimeSetting);
