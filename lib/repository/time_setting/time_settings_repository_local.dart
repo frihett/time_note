@@ -1,6 +1,6 @@
 import 'package:time_note/data_source/time_settings_database_service.dart';
 import 'package:time_note/model/time_setting.dart';
-import 'package:time_note/repository/time_settings_repository.dart';
+import 'package:time_note/repository/time_setting/time_settings_repository.dart';
 
 class TimeSettingsRepositoryLocal implements TimeSettingsRepository {
   final TimeSettingsDatabaseService databaseService;
@@ -23,16 +23,11 @@ class TimeSettingsRepositoryLocal implements TimeSettingsRepository {
   }
 
   @override
-  Future<int> updateMemo(int timeSettingId, String memo) async {
-    return await databaseService.updateMemo(timeSettingId, memo);
-  }
-
-  @override
   Future<int> deleteTimeSetting(int id) async {
     return await databaseService.deleteTimeSetting(id);
   }
 
-  Future<int> updateToggleState(int id, bool isToggled) async{
+  Future<int> updateToggleState(int id, bool isToggled) async {
     return await databaseService.updateToggleState(id, isToggled);
   }
 }
