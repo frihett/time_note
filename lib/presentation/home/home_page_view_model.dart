@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:time_note/data_source/time_settings_database_service.dart';
 import 'package:time_note/model/time_setting.dart';
-import 'package:time_note/repository/time_settings_repository.dart';
+import 'package:time_note/repository/time_setting/time_settings_repository.dart';
 
 class HomePageViewModel extends ChangeNotifier {
   final TimeSettingsRepository _repository;
@@ -22,7 +21,7 @@ class HomePageViewModel extends ChangeNotifier {
 
   Future<void> addTimeSetting(TimeSetting newTimeSetting) async {
     await _repository.createTimeSetting(newTimeSetting);
-    loadTimeSettings(); // 데이터 갱신
+    loadTimeSettings();
   }
 
   Future<void> deleteTimeSetting(int id) async {

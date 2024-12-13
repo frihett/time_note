@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_note/presentation/home/home_page.dart';
-import 'package:time_note/memo_manage_page.dart';
+import 'package:time_note/presentation/memo/memo_manage_page.dart';
 
 class MainPage extends StatefulWidget {
   final Widget child;
