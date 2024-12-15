@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UiStyle {
-  static const Color primaryColor = Color(0xFF3EB489); // 민트
-  static const Color primaryColorSurface = Color(0xFFE0F7EF); // 밝은 민트 배경
-  static const Color secondaryColor = Color(0xFF2196F3); // 파랑
-  static const Color secondaryColorSurface = Color(0xFFD9EFFF); // 소프트 블루 배경
-  static const Color thirdColor = Color(0xFFE91E63); // 핑크
-  static const Color thirdColorSurface = Color(0xFFFFE4E9); // 라이트 핑크 배경
+  static const Color primaryColor = Color(0xFF8687E7);
+  static const Color primaryColorSurface = Color(0xFFE5E5F8);
+  static const Color secondaryColor = Color(0xFF6C79E0);
+  static const Color secondaryColorSurface = Color(0xFFD9E0F8);
+  static const Color thirdColor = Color(0xFFE67C9A);
+  static const Color thirdColorSurface = Color(0xFFF8E3EB);
 
   static const MaterialColor black = MaterialColor(0xff282828, color);
   static const Map<int, Color> color = {
