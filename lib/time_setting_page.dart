@@ -42,9 +42,6 @@ class _TimeSettingPageState extends State<TimeSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('시간 설정'),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -136,7 +133,6 @@ class _TimeSettingPageState extends State<TimeSettingPage> {
           SizedBox(height: 20.h),
           ElevatedButton(
             onPressed: () {
-
               context.pop({
                 'period': _selectedPeriod,
                 'hour': _selectedHour,
