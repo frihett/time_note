@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:time_note/presentation/home/home_page.dart';
-import 'package:time_note/presentation/memo/memo_manage_page.dart';
+import 'package:time_note/config/ui_style/ui_style.dart';
 
 class MainPage extends StatefulWidget {
   final Widget child;
@@ -15,20 +14,13 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  // 각 네비게이션 페이지
-  final List<Widget> _pages = [
-    HomePage(),
-    MemoManagePage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Time Note'),
-      ),
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: UiStyle.secondaryColorSurface,
+        selectedItemColor: UiStyle.secondaryColor,
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -44,11 +36,11 @@ class _MainPageState extends State<MainPage> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.access_time),
-            label: '홈',
+            label: 'Setting',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: '메모 관리',
+            label: 'Memo',
           ),
         ],
       ),
