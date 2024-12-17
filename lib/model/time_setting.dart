@@ -37,4 +37,10 @@ class TimeSetting {
       isToggled: map['isToggled'] == 1,
     );
   }
+
+  @override
+  String toString() {
+    return 'TimeSetting{id: $id, period: $period, hour: $hour, minute: $minute, date: ${date.toIso8601String()}, isToggled: $isToggled}';
+  }
+
 }
