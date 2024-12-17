@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:time_note/data_source/memo_database_service.dart';
 import 'package:time_note/data_source/time_settings_database_service.dart';
 import 'package:time_note/main_page.dart';
+import 'package:time_note/model/memo.dart';
 import 'package:time_note/presentation/memo/memo_manage_page.dart';
 import 'package:time_note/presentation/memo/memo_manage_view_model.dart';
 import 'package:time_note/presentation/memo/memo_write_page.dart';
@@ -59,6 +60,7 @@ final GoRouter goRouter = GoRouter(
       path: '/memoWritePage',
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>;
+        final memo = extra['memo'] as Memo?;
         final period = extra['period'] as String;
         final hour = extra['hour'] as int;
         final minute = extra['minute'] as int;
@@ -67,6 +69,7 @@ final GoRouter goRouter = GoRouter(
         final day = extra['day'] as int;
         return ChangeNotifierProvider(
           create: (context) => MemoWriteViewModel(
+            memo : memo,
             period: period,
             hour: hour,
             minute: minute,
