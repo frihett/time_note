@@ -76,13 +76,30 @@ class _MemoManagePageState extends State<MemoManagePage> {
                           itemBuilder: (context, index) {
                             final memo = viewModel.memos[index];
                             return GestureDetector(
+                              onLongPress: () {
+                                viewModel.deleteMemo(memo.id!);
+                                viewModel
+                                    .fetchMemosByDate(viewModel.selectedDate);
+                              },
                               onTap: () {
-                                context.push('/memoWritePage', extra: memo);
+                                final date =
+                                    DateTime.parse(memo.date.toString());
+
+                                context.go('/memoWritePage', extra: {
+                                  'memo': memo,
+                                  'period': date.hour >= 12 ? '오후' : '오전',
+                                  'hour':
+                                      date.hour % 12 == 0 ? 12 : date.hour % 12,
+                                  'minute': date.minute,
+                                  'year': date.year,
+                                  'month': date.month,
+                                  'day': date.day,
+                                });
                               },
                               child: Container(
                                 margin: EdgeInsets.symmetric(vertical: 12.h),
                                 padding: EdgeInsets.symmetric(
-                                  vertical: 28.h,
+                                  vertical: 20.h,
                                   horizontal: 20.w,
                                 ),
                                 decoration: BoxDecoration(
@@ -92,20 +109,11 @@ class _MemoManagePageState extends State<MemoManagePage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('내용'),
                                     Text(
-                                      memo.content,
-                                      style: UiStyle.h3Style.copyWith(
-                                        color: UiStyle.color[700],
-                                      ),
-                                    ),
+                                        '${memo.date.hour}:${memo.date.minute}',
+                                        style: UiStyle.bodyStyle),
                                     SizedBox(height: 10.h),
-                                    Text(
-                                      '${memo.date.hour}:${memo.date.minute}',
-                                      style: UiStyle.bodyStyle.copyWith(
-                                        color: UiStyle.color[700],
-                                      ),
-                                    ),
+                                    Text(memo.content, style: UiStyle.h4Style),
                                   ],
                                 ),
                               ),
@@ -126,7 +134,7 @@ class _MemoManagePageState extends State<MemoManagePage> {
           final period = now.hour >= 12 ? 'PM' : 'AM';
           final hour = now.hour % 12 == 0 ? 12 : now.hour % 12;
           final minute = now.minute;
-          await context.push(
+          context.go(
             '/memoWritePage',
             extra: {
               'period': period,
