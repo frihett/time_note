@@ -23,4 +23,11 @@ class MemoManageViewModel extends ChangeNotifier {
     memos = fetchedMemos;
     notifyListeners();
   }
+
+  Future<void> deleteMemo(int id) async{
+    await memoRepository.deleteMemo(id);
+    print(' 메모가 삭제 되었습니다.');
+    notifyListeners();
+  }
+
 }
