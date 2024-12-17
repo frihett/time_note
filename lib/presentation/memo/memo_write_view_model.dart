@@ -32,9 +32,9 @@ class MemoWriteViewModel extends ChangeNotifier {
                 year,
                 month,
                 day,
-                period == 'PM' && hour != 12
+                period == '오후' && hour != 12
                     ? hour + 12
-                    : (period == 'AM' && hour == 12 ? 0 : hour),
+                    : (period == '오전' && hour == 12 ? 0 : hour),
                 minute,
               ),
               content: '',
