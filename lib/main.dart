@@ -6,6 +6,7 @@ import 'package:time_note/data_source/memo_database_service.dart';
 import 'package:time_note/data_source/time_settings_database_service.dart';
 import 'package:time_note/router.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -16,13 +17,17 @@ void main() async {
 
   tz.initializeTimeZones();
 
+  tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
+
+
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
   const InitializationSettings initializationSettings =
       InitializationSettings(android: initializationSettingsAndroid);
 
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onDidReceiveNotificationResponse: onNotificationResponse);
 
   await requestExactAlarmPermission();
 
@@ -53,11 +58,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 Future<void> requestExactAlarmPermission() async {
-  final androidPlugin = flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>();
+  final androidPlugin =
+      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
 
   if (androidPlugin != null) {
     final hasPermission = await androidPlugin.requestExactAlarmsPermission();
@@ -66,5 +70,22 @@ Future<void> requestExactAlarmPermission() async {
     } else {
       print('Exact alarms permission granted');
     }
+  }
+}
+
+void onNotificationResponse(NotificationResponse response) {
+  if (response.payload != null) {
+    final payload = response.payload!.split(',');
+    final hour = int.parse(payload[0]);
+    final minute = int.parse(payload[1]);
+
+    goRouter.go('/memoWritePage', extra: {
+      'period': hour >= 12 ? '오후' : '오전',
+      'hour': hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour),
+      'minute': minute,
+      'year': DateTime.now().year,
+      'month': DateTime.now().month,
+      'day': DateTime.now().day,
+    });
   }
 }
