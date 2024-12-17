@@ -40,15 +40,6 @@ class HomePageViewModel extends ChangeNotifier {
 
       if (isToggled) {
         final timeSetting = _timeSettings[index];
-        print('알람이 설정되었어요');
-        print(timeSetting.toString());
-        print(timeSetting.period == '오후' && timeSetting.hour != 12
-            ? timeSetting.hour + 12
-            : (timeSetting.period == '오전' && timeSetting.hour == 12
-                ? 0
-                : timeSetting.hour));
-        print(tz.TZDateTime(tz.local, 2040, 12, 5, timeSetting.hour, timeSetting.minute));
-        print(tz.local);
 
         await scheduleDailyNotification(
           id: timeSetting.id!,
@@ -58,11 +49,11 @@ class HomePageViewModel extends ChangeNotifier {
                   ? 0
                   : timeSetting.hour),
           minute: timeSetting.minute,
-          title: 'Time Note Reminder',
+          title: '타임노트',
           body:
-              '${timeSetting.period} ${timeSetting.hour}:${timeSetting.minute.toString().padLeft(2, '0')} 알림이 있습니다.',
+              '${timeSetting.period} ${timeSetting.hour}:${timeSetting.minute.toString().padLeft(2, '0')} 메모를 적으러 가세요.',
         );
-        print('알람이 잘 되었어요');
+        print('알람이 설정되었어요');
       } else {
         print('알람이 취소되었어요');
         await cancelNotification(id);
@@ -91,6 +82,7 @@ class HomePageViewModel extends ChangeNotifier {
           priority: Priority.high,
         ),
       ),
+      payload: '$hour,$minute',
       matchDateTimeComponents: DateTimeComponents.time,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
