@@ -9,9 +9,10 @@ import 'package:time_note/presentation/memo/memo_write_page.dart';
 import 'package:time_note/presentation/home/home_page.dart';
 import 'package:time_note/presentation/home/home_page_view_model.dart';
 import 'package:time_note/presentation/memo/memo_write_view_model.dart';
+import 'package:time_note/presentation/time_setting/time_setting_view_model.dart';
 import 'package:time_note/repository/memo/memo_repository_local.dart';
 import 'package:time_note/repository/time_setting/time_settings_repository_local.dart';
-import 'package:time_note/time_setting_page.dart';
+import 'package:time_note/presentation/time_setting/time_setting_page.dart';
 
 final GoRouter goRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -49,7 +50,9 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
       path: '/timeSettingPage',
       builder: (context, state) {
-        return TimeSettingPage(); // MainPage 외부의 페이지
+        return ChangeNotifierProvider(
+            create: (context) => TimeSettingViewModel(),
+            child: TimeSettingPage()); // MainPage 외부의 페이지
       },
     ),
     GoRoute(
