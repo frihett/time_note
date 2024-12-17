@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:time_note/main.dart';
 import 'package:time_note/model/time_setting.dart';
 import 'package:time_note/repository/time_setting/time_settings_repository.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class HomePageViewModel extends ChangeNotifier {
   final TimeSettingsRepository _repository;
@@ -34,7 +37,68 @@ class HomePageViewModel extends ChangeNotifier {
     final index = _timeSettings.indexWhere((setting) => setting.id == id);
     if (index != -1) {
       _timeSettings[index].isToggled = isToggled;
+
+      if (isToggled) {
+        final timeSetting = _timeSettings[index];
+        print('알람이 설정되었어요');
+        print(timeSetting.toString());
+        print(timeSetting.period == '오후' && timeSetting.hour != 12
+            ? timeSetting.hour + 12
+            : (timeSetting.period == '오전' && timeSetting.hour == 12
+                ? 0
+                : timeSetting.hour));
+        print(tz.TZDateTime(tz.local, 2040, 12, 5, timeSetting.hour, timeSetting.minute));
+        print(tz.local);
+
+        await scheduleDailyNotification(
+          id: timeSetting.id!,
+          hour: timeSetting.period == '오후' && timeSetting.hour != 12
+              ? timeSetting.hour + 12
+              : (timeSetting.period == '오전' && timeSetting.hour == 12
+                  ? 0
+                  : timeSetting.hour),
+          minute: timeSetting.minute,
+          title: 'Time Note Reminder',
+          body:
+              '${timeSetting.period} ${timeSetting.hour}:${timeSetting.minute.toString().padLeft(2, '0')} 알림이 있습니다.',
+        );
+        print('알람이 잘 되었어요');
+      } else {
+        print('알람이 취소되었어요');
+        await cancelNotification(id);
+      }
+
       notifyListeners();
     }
+  }
+
+  Future<void> scheduleDailyNotification(
+      {required int id,
+      required int hour,
+      required int minute,
+      required String title,
+      required String body}) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id, // 알림 고유 ID
+      title, // 알림 제목
+      body, // 알림 내용
+      tz.TZDateTime(tz.local, 2040, 12, 5, hour, minute),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'daily_notification_channel', // 채널 ID
+          'Daily Notifications', // 채널 이름
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+      ),
+      matchDateTimeComponents: DateTimeComponents.time,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
+  }
+
+  Future<void> cancelNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 }
