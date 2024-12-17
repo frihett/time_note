@@ -20,7 +20,28 @@ class _HomePageState extends State<HomePage> {
         builder: (context, viewModel, child) {
           if (viewModel.timeSettings.isEmpty) {
             return Center(
-              child: Text('저장된 시간이 없습니다.'),
+              child: GestureDetector(
+                onTap: () async {
+                  final result = await context.push('/timeSettingPage');
+
+                  if (result != null && result is Map<String, dynamic>) {
+                    final newTimeSetting = TimeSetting(
+                      id: null,
+                      period: result['period'],
+                      hour: result['hour'],
+                      minute: result['minute'],
+                      date: DateTime.now(),
+                    );
+                    Provider.of<HomePageViewModel>(context, listen: false)
+                        .addTimeSetting(newTimeSetting);
+                  }
+                },
+                child: Icon(
+                  Icons.add_circle,
+                  color: UiStyle.secondaryColorSurface,
+                  size: 32.sp,
+                ),
+              ),
             );
           }
           return Padding(
