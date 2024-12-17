@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:time_note/config/ui_style/UiStyle.dart';
+import 'package:time_note/config/ui_style/ui_style.dart';
 import 'package:time_note/presentation/memo/memo_manage_view_model.dart';
 
 class MemoManagePage extends StatefulWidget {
@@ -25,9 +25,7 @@ class _MemoManagePageState extends State<MemoManagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text('메모 관리')),
-      ),
+      appBar: AppBar(),
       body: Consumer<MemoManageViewModel>(
         builder: (context, viewModel, child) {
           return Column(
@@ -57,6 +55,7 @@ class _MemoManagePageState extends State<MemoManagePage> {
                     ),
                   ),
                   headerStyle: HeaderStyle(
+                    titleCentered: true,
                     formatButtonVisible: false,
                   ),
                 ),
@@ -102,7 +101,7 @@ class _MemoManagePageState extends State<MemoManagePage> {
                                     ),
                                     SizedBox(height: 10.h),
                                     Text(
-                                      '${memo.date.hour}-${memo.date.minute}',
+                                      '${memo.date.hour}:${memo.date.minute}',
                                       style: UiStyle.bodyStyle.copyWith(
                                         color: UiStyle.color[700],
                                       ),
