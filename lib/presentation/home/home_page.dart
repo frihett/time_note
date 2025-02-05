@@ -90,7 +90,11 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       final timeSetting = viewModel.timeSettings[index];
                       return GestureDetector(
-                        onLongPress: () {
+                        onLongPress: () async {
+                          if (timeSetting.isToggled) {
+                            await viewModel.cancelNotification(timeSetting.id!);
+                            print('알림이 취소되었습니다.');
+                          }
                           viewModel.deleteTimeSetting(timeSetting.id!);
                         },
                         child: Container(
